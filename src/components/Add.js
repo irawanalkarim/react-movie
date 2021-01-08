@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ResultCard } from './ResultCard';
 
 export const Add = () => {
@@ -10,7 +10,7 @@ export const Add = () => {
 		setQuery(e.target.value);
 
 		fetch(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1&include_adult=false&query=${e.target.value}`)
-		.then((res) => res.json())
+		.then((results) => results.json())
 		.then((data) => {
 			if(!data.errors) {
 				setResults(data.results);
@@ -25,12 +25,7 @@ export const Add = () => {
 			<div className="container">
 				<div className="add-content">
 					<div className="input-wrapper">
-						<input 
-							type="text" 
-							placeholder="Search movie..." 
-							value={query} 
-							onChange={onChange}
-						/>
+						<input type="text" placeholder="Search movie..." value={query} onChange={onChange} />
 					</div>
 					{results.length > 0 && (
 						<ul className="results">
